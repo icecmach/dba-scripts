@@ -1,0 +1,5 @@
+psql -c "SELECT * FROM pg_stat_database;"
+echo "=================================="
+psql -c "SELECT * FROM pg_stat_bgwriter;"
+echo "=================================="
+psql -c "SELECT datname,pid,state,query FROM pg_stat_activity;"

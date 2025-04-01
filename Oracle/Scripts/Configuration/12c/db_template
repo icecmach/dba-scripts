@@ -1,0 +1,16 @@
+dbca -createDatabase
+  -responseFile NO_VALUE
+  -gdbName DBSIT01
+  -templateName General_Purpose.dbc
+  -sid DBSIT01
+  -sysPassword oracle
+  -systemPassword oracle
+  -emConfiguration NONE
+  -datafileDestination +DATA/DBSIT01/DATAFILE/
+  -redoLogFileSize 50
+  -storageType ASM
+  -characterSet AL32UTF8
+  -memoryMgmtType AUTO_SGA
+  -useOMF true
+  -totalMemory 16000
+  -databaseType MULTIPURPOSE

@@ -1,0 +1,23 @@
+Automating Database Startup and Shutdown on Linux
+
+1 - Once the instance is created, edit the "/etc/oratab" file setting the restart flag for each instance to 'Y'
+
+ORCL:/u01/app/oracle/product/19.3.0/dbhome_1:Y
+
+2 - Create and give permissions to the scripts in /home/oracle/scripts
+
+chown -R oracle.oinstall /home/oracle/scripts
+chmod u+x /home/oracle/scripts/*.sh
+
+3 - Create a file called "/etc/systemd/system/dbora.service" as the root user
+
+4 - Reload systemd to enable the service
+
+# systemctl daemon-reload
+# systemctl enable dbora.service
+
+5 - You can test them using the following command as the "root" user.
+
+# systemctl start dbora.service
+# systemctl stop dbora.service
+# systemctl status dbora.service

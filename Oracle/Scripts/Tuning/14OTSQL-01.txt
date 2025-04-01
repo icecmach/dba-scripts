@@ -1,0 +1,35 @@
+Oracle Text
+https://oracle-base.com/articles/9i/full-text-indexing-using-oracle-text-9i
+
+External Tables
+https://oracle-base.com/articles/9i/external-tables-9i
+
+Secure Files
+http://www.oracle.com/technetwork/articles/sql/11g-securefiles-084075.html
+
+
+Oracle Database Editions
+https://docs.oracle.com/cd/E11882_01/license.112/e47877/editions.htm#DBLIC116
+
+https://dbatman.blog/2018/04/27/scripts-for-temp-space-checking-and-troubleshooting/
+
+SessõesQueMaisConsomemPGAeTEMP
+SELECT A.SID, TO_CHAR(A.VALUE), B.NAME FROM V$SESSTAT A, V$STATNAME B WHERE A.STATISTIC# IN (SELECT DISTINCT STATISTIC# FROM V$STATNAME WHERE NAME LIKE '%pga%' OR NAME LIKE '%sort%') AND A.STATISTIC# = B.STATISTIC# ORDER BY A.VALUE;
+
+SessõesQueMaisConsomemUNDO
+SELECT TO_CHAR((SUM(USED_UBLK))*8192) FROM "V$TRANSACTION";
+SELECT USERNAME, SID, TERMINAL, OSUSER,
+T.START_TIME, R.NAME, TO_CHAR((SUM(T.USED_UBLK))*8192)/1024/1024 "ROLLB BLKS",
+DECODE(T.SPACE, 'YES', 'SPACE TX',
+DECODE(T.RECURSIVE, 'YES', 'RECURSIVE TX',
+DECODE(T.NOUNDO, 'YES', 'NO UNDO TX', T.STATUS)
+)) STATUS
+FROM SYS.V_$TRANSACTION T, SYS.V_$ROLLNAME R, SYS.V_$SESSION S
+WHERE T.XIDUSN = R.USN
+AND T.SES_ADDR = S.SADDR
+GROUP BY  USERNAME, SID, TERMINAL, OSUSER,
+T.START_TIME, R.NAME, DECODE(T.SPACE, 'YES', 'SPACE TX',
+DECODE(T.RECURSIVE, 'YES', 'RECURSIVE TX',
+DECODE(T.NOUNDO, 'YES', 'NO UNDO TX', T.STATUS)
+))
+ORDER BY 7 DESC;

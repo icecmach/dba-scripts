@@ -1,0 +1,4 @@
+# Backup
+0 22 * * 6   /home/oracle/scripts/rman_backup_full.sh 2>&1
+0 22 * * 0-5 /home/oracle/scripts/rman_backup_incr.sh 2>&1
+5 * * * *    /home/oracle/scripts/rman_backup_arch.sh 2>&1

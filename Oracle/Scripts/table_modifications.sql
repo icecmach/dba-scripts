@@ -1,0 +1,1 @@
+SELECT * FROM all_tab_modifications where TABLE_OWNER='SOE';
