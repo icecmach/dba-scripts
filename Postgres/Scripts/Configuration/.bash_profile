@@ -14,8 +14,8 @@ alias envs='env | sort'
 alias pspg='ps -ef | grep postgres'
 alias cdata='cd $PGDATA'
 alias scd='cd $SCRIPTS_DIR'
-alias pgstart='pg_ctl start && echo "PostgreSQL service started!"'
-alias pgstop='pg_ctl stop && echo "PostgreSQL service stopped!"'
+alias pgstart='pg_ctl start'
+alias pgstop='pg_ctl stop'
 alias pgstatus='pg_ctl status'
 alias pgdiskusage='du -sh $PGDATA'
 alias pgmemusage='ps aux | grep postgres | awk '\''{sum+=$6} END {print "Total memory used by PostgreSQL (in KB):", sum/1024 " MB"}'\'''
@@ -25,7 +25,7 @@ dash() {
 }
 
 # User specific environment and startup programs
-. /home/postgres/scripts/setEnv.sh
+. $HOME/scripts/setEnv.sh
 
 # Prompt
 WHITE='\[\e[01;37m\]'
@@ -34,11 +34,8 @@ DEFAULT='\[\e[0m\]'
 #export PS1=${RED}$(whoami)'@${HOSTNAME}'${WHITE}'[${ORACLE_SID}]($PWD):'
 export PS1="${RED}\u@\h${DEFAULT}(\w)$ "
 
-echo -e "\n==================== PostgreSQL System Info ===================="
-echo -e "\nPostgreSQL Service Status:"
-pgstatus && dash
-echo -e "\nPGData Usage:"
-pgdiskusage && dash
-echo -e "\nMemory Usage (PostgreSQL):"
-pgmemusage
-echo -e "\n==================== End of PostgreSQL Info ===================="
+echo "==================== PostgreSQL System Info ===================="
+echo "PostgreSQL Service Status: $(pgstatus && dash)"
+echo "PGData Usage: $(pgdiskusage && dash)"
+echo "Memory Usage: $(pgmemusage)"
+echo "==================== End of PostgreSQL Info ===================="

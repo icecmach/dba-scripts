@@ -20,21 +20,18 @@
 # Install postgres
 dnf install -y postgresql-server.x86_64
 
-# Create directories
-mkdir -p /home/postgres/scripts
-chown -R postgres:postgres /home/postgres
-usermod -d /home/postgres postgres
-
-mkdir /usr/local/pgsql
-chown postgres /usr/local/pgsql
+PGHOME=$(echo ~postgres)
+# Create script directory
+mkdir -p $PGHOME/scripts
+chown postgres:postgres $PGHOME/scripts
 
 # Initialize db
-su - postgres -c 'pg_ctl -D /usr/local/pgsql/data initdb'
+su - postgres -c 'pg_ctl -D $HOME/data initdb'
 
 # Prepare postgres user environment
-cp setEnv.sh /home/postgres/scripts
-cp -f -p .bash_profile /home/postgres
+cp setEnv.sh $PGHOME/scripts
+cp -f -p .bash_profile $PGHOME
 
 # Set permissions
-chown -R postgres:postgres /home/postgres
-chmod u+x /home/postgres/scripts/*.sh
+chown -R postgres:postgres $PGHOME
+chmod u+x $PGHOME/scripts/*.sh
