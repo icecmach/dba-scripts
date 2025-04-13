@@ -35,3 +35,9 @@ cp -f -p .bash_profile $PGHOME
 # Set permissions
 chown -R postgres:postgres $PGHOME
 chmod u+x $PGHOME/scripts/*.sh
+
+# Create systemd service
+cp postgresql.service /etc/systemd/system/
+systemctl daemon-reload
+systemctl start postgresql.service
+systemctl enable postgresql.service
